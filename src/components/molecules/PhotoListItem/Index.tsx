@@ -5,20 +5,16 @@ import { View, Text, Image } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import IPhotos from '../../../models/IPhotos'
 import { IState } from '../../../models/IState'
-import { actualizarPhotos } from '../../../store/actions/Photos'
-import { Album, Photos } from '../../../store/reducers'
+
 
 export interface PhotoListItemProps {
-    photoL: IPhotos;
-   
+    photoL: IPhotos;  
 }
 
 const PhotoListItem: React.FC<PhotoListItemProps> = ({photoL}) => {
-    //const dispatch = useDispatch();
     const photosL = useSelector((state: IState) => state.Photos.photos);
     const {albumId,id, title,  thumbnailUrl} = photoL
   
-     //dispatch(actualizarPhotos(photoList));
     return (
         <Container>
             <Text>

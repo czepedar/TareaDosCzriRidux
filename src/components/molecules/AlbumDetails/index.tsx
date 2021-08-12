@@ -1,35 +1,31 @@
 import styled from '@emotion/native'
 import React from 'react'
 import { Text,Button, StyleSheet} from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import IAlbum from '../../../models/IAlbum'
-import { IState } from '../../../models/IState'
-import IPhotos from '../../../models/IPhotos'
-import PhotoListItem from '../../molecules/PhotoListItem'
-import { actualizarSelectedAlbum } from '../../../store/actions/Album'
-import { fetchPhotos } from '../../../store/actions/Photos'
 import { useEffect } from 'react'
 import { Image } from 'react-native'
-import { Photos } from '../../../store/reducers'
+import { useAlbum } from '../../context/Album-Context'
+import { usePhoto } from '../../context/Photo-Context'
+import { useHistory } from 'react-router-native'
 
 
 const AlbumDetails: React.FC = ()  => {
-    const dispatch = useDispatch();
-
-  const selectedAlbum = useSelector((state: IState) => state.Album.selectedAlbum);
-  const album = useSelector((state: IState) => state.Album.album);
+  const history = useHistory()  
+  const {album, setSelectedAlbum, selectedAlbum} = useAlbum();
   const {id, title} = album[selectedAlbum || 0];
-  const photos = useSelector((state: IState) => state.Photos.photos);
-  const filterPhotos = photos.filter(photo => photo.albumId === id)
+  const {photo, fetchPhoto} = usePhoto();
+  const filterPhotos = photo.filter(photo => photo.albumId === id)
+
 
     const onBackPress = () => {
-        dispatch(actualizarSelectedAlbum(null))
+        setSelectedAlbum(null)
+        history.goBack();
     };
 
-    useEffect(() => {
-        dispatch(fetchPhotos());
-      }, []);
 
+      useEffect(() => {
+        fetchPhoto()
+      }, [])
+        
     return (
     
         <Container>
@@ -43,8 +39,6 @@ const AlbumDetails: React.FC = ()  => {
             {item.id}-{item.title} {"\n"}
             <Image style={styles.image} source={{uri: item.thumbnailUrl}}/></Text> } />
                 )}
-          
-      
 
             <Button title="Regresar" onPress={onBackPress}/>
         </Container>

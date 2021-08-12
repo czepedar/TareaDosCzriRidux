@@ -2,8 +2,10 @@ import styled from '@emotion/native';
 import React, {FC} from 'react';
 import {Text} from 'react-native';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-native';
 import IAlbum from '../../../models/IAlbum';
 import { actualizarSelectedAlbum } from '../../../store/actions/Album';
+import { useAlbum } from '../../context/Album-Context';
 
 export interface AlbumListItemProps {
   album: IAlbum;
@@ -12,12 +14,13 @@ export interface AlbumListItemProps {
 }
 
 const AlbumListItem: FC<AlbumListItemProps> = ({album, index}) => {
-    const dispatch = useDispatch()
-
+  const {setSelectedAlbum} = useAlbum()
+  const history = useHistory();
   const onPress = () => {
-    dispatch(actualizarSelectedAlbum(index))
+    setSelectedAlbum(index)
+    history.push('/detalle')
   };
-
+    
   return (
     <ItemContainer onPress={onPress}>
       <Text>
