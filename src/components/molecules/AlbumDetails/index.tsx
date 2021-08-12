@@ -40,7 +40,7 @@ const AlbumDetails: React.FC = ()  => {
             <Image style={styles.image} source={{uri: item.thumbnailUrl}}/></Text> } />
                 )}
 
-            <Button title="Regresar" onPress={onBackPress}/>
+
         </Container>
     )
 }
