@@ -18,7 +18,7 @@ const AlbumListItem: FC<AlbumListItemProps> = ({album, index}) => {
   const history = useHistory();
   const onPress = () => {
     setSelectedAlbum(index)
-    history.push('/detalle')
+    //history.push('/detalle')
   };
     
   return (
